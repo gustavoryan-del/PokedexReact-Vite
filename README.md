@@ -203,10 +203,10 @@ pokedex-react-vite/
 
 ## 👥 Autores
 
-| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn 
-| :--- | :---: | :---: | :---: | :--- |
-| **Integrante 1** | <img src="https://github.com/identicons/user1.png" width="50"> | [GitHub](https://github.com/gustavoryan-del) | [LinkedIn](https://linkedin.com/in/gryangomesguedes) 
-| **Integrante 2** | <img src="https://github.com/identicons/user2.png" width="50"> | [GitHub](https://github.com/user2) | [LinkedIn](https://linkedin.com/in/user2) 
+| 👤 Nome | GitHub | 💼 LinkedIn 
+|
+| **Gustavo Ryan** | [GitHub](https://github.com/gustavoryan-del) | [LinkedIn](https://linkedin.com/in/gryangomesguedes) 
+| **Lucas Gomes** | [GitHub](https://github.com/user2) | [LinkedIn](https://linkedin.com/in/user2) 
 
 ---
 
