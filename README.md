@@ -1,108 +1,215 @@
-# Pokédex React + Vite
+# 🔴 Legends Pokédex ⚡
 
-Pokédex interativa feita com **React + Vite**, no visual de uma Pokédex física: carcaça vermelha, lente azul, LEDs e uma tela LCD onde a lista de Pokémon é exibida.
+> [!NOTE]
+> Pokédex interativa desenvolvida em **React + Vite** com o visual e a experiência de uma Pokédex física clássica: carcaça vermelha, lente azul, LEDs piscantes e tela LCD responsiva.
 
-**Integrantes da dupla:**
+## 🚧 Status do Projeto
 
-- Nome do integrante 1
-- Nome do integrante 2
+![Status do Projeto](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-1.0.0-blue)
+![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 
-## Como executar
+## 📚 Índice
 
-Pré-requisito: [Node.js](https://nodejs.org/) 18 ou superior.
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades Principais](#-funcionalidades-principais)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Arquitetura](#-arquitetura)
+- [Instalação e Execução](#-instala%C3%A7%C3%A3o-e-execu%C3%A7%C3%A3o)
+  - [Pré-requisitos](#pr%C3%A9-requisitos)
+  - [Como Executar a Aplicação](#-como-executar-a-aplica%C3%A7%C3%A3o)
+- [Estrutura de Pastas](#-estrutura-de-pastas)
+- [Demonstração](#-demonstra%C3%A7%C3%A3o)
+- [Dados Utilizados & API Externa](#-dados-utilizados--api-externa)
+- [Autores](#-autores)
+- [Licença](#-licen%C3%A7a)
 
+---
+
+## 📝 Sobre o Projeto
+
+A **Legends Pokédex** foi criada com o objetivo de unir design nostálgico e desenvolvimento web moderno.
+
+* **Motivação:** Recriar a experiência física das Pokédex clássicas dos anos 90/2000, oferecendo uma interface envolvente com botões táteis, barras de atributos estilo LCD e efeitos visuais realistas.
+* **Problema Resolvido:** Oferece uma ferramenta fluida para consulta rápida de dados Pokémon, comparação direta de estatísticas entre combatentes e controle pessoal de Pokémon capturados.
+* **Público-Alvo:** Entusiastas de Pokémon, estudantes e desenvolvedores interessados em interfaces temáticas, componentização limpa e gerenciamento de estado em React.
+
+> [!NOTE]
+> A aplicação foi projetada para ocupar 100% da altura visível da tela (`100dvh`), eliminando rolagens globais no navegador e mantendo a rolagem restrita ao visor interno da Pokédex.
+
+---
+
+## ✨ Funcionalidades Principais
+
+* 🔍 **Busca Dinâmica & Filtros:** Pesquisa por nome ou número formatado (ex: `#025` ou `Pikachu`) e filtragem por tipo via chips interativos.
+* 📊 **Atributos em Medidores LCD:** Visualização detalhada de HP, Ataque, Defesa, Atq. Especial, Def. Especial e Velocidade.
+* 🔀 **Ordenação Personalizada:** Ordene por número, nome ou por qualquer estatística individual em ordem crescente ou decrescente.
+* 🥊 **Modal de Comparação (VS):** Selecione 2 Pokémon para comparar seus atributos lado a lado com barras de progresso animadas e resumo de liderança.
+* 🔴 **Gerenciamento de Capturados (Favoritos):** Alterne o status de captura de cada Pokémon. O progresso fica salvo no `localStorage` e pode ser filtrado através do botão **"Só capturados"**.
+* 📜 **Dados Biométricos via PokéAPI:** Detalhes de altura, peso, habilidades (com indicação de ocultas) e descrição oficial carregados dinamicamente sob demanda.
+* 👤 **Modal de Treinadores:** Lista os treinadores clássicos (Ash, Brock, Misty, Erika, Giovanni, etc.), suas insígnias acumuladas e seus respectivos times de Pokémon.
+* 🎲 **Modo Aleatório:** Sorteia um Pokémon com base nos filtros atualmente aplicados e abre sua ficha detalhada.
+* 🌓 **Temas Dark / Retro LCD:** Alterne entre o tema escuro padrão e o tema claro estilo tela LCD verde-claro clássica.
+* ♿ **Acessibilidade & Usabilidade:** Suporte a navegação por teclado (`Esc` para fechar modais, setas `←` `→` para navegar entre Pokémon), captura de foco em modais e suporte a `prefers-reduced-motion`.
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+### 💻 Front-end
+
+* **Biblioteca Principal:** [React 19](https://react.dev/)
+* **Build Tool & Dev Server:** [Vite 6](https://vitejs.dev/)
+* **Linguagem:** JavaScript (ES6+)
+* **Estilização:** CSS3 Puro com Variáveis CSS, Flexbox, Grid e Animações Keyframes
+* **Tipografia:** Google Fonts ([Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch) & [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P))
+* **Ícones & Gráficos:** SVG inline vetoriais e artes oficiais da PokéAPI
+
+---
+
+## 🏗 Arquitetura
+
+O projeto adota uma arquitetura em componentes reutilizáveis e desacoplados, utilizando Hooks customizados para isolar a lógica de estado e persistência:
+
+* **Custom Hooks:**
+  * `useCaptured`: Gerencia o conjunto de Pokémon capturados e sincroniza automaticamente com o `localStorage`.
+  * `useTheme`: Controla o tema (`dark`/`light`) e persiste a preferência no navegador.
+  * `usePokemonExtra`: Consome a PokéAPI com suporte a cache em memória (`Map`) para evitar requisições repetidas e controle de cancelamento com `AbortController`.
+* **Modais via Portals:** Uso de `React.createPortal` para renderizar janelas modais fora da árvore principal da DOM, mantendo a acessibilidade e o controle de foco.
+
+---
+
+## 🔧 Instalação e Execução
+
+### Pré-requisitos
+
+* **Node.js:** Versão **18.x** ou superior.
+* **Gerenciador de Pacotes:** `npm` (incluso no Node) ou `yarn`.
+
+### ⚡ Como Executar a Aplicação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/pokedex-react-vite.git
+   cd pokedex-react-vite
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Acesse no navegador:**
+   Abra o endereço indicado no terminal (normalmente **`http://localhost:5173`**).
+
+#### Outros Comandos:
 ```bash
-npm install
-npm run dev
+npm run build    # Gera a versão otimizada de produção na pasta /dist
+npm run preview  # Serve a versão de produção localmente para verificação
 ```
 
-Depois, abra no navegador o endereço exibido no terminal. Por padrão do Vite: **http://localhost:5173**
+---
 
-Outros comandos:
-
-```bash
-npm run build     # gera a versão de produção em dist/
-npm run preview   # serve a versão de produção localmente
-```
-
-> As imagens dos Pokémon, as fontes e os dados complementares da PokéAPI vêm da internet (veja "Fontes externas"). Sem conexão, a Pokédex continua funcionando com os dados do JSON, mas sem imagens e sem o painel complementar.
-
-## Funcionalidades
-
-### Requisitos do enunciado
-
-| Requisito | Como foi atendido |
-| --- | --- |
-| Exibir os Pokémon dos dados | Grade de cards com ID, nome, tipos e os 6 atributos (HP, Ataque, Defesa, Atq. Esp., Def. Esp. e Velocidade) |
-| Pesquisa por nome ou ID | Campo de busca que filtra a lista enquanto o usuário digita (aceita também `#025`) |
-| Filtro por tipo | Chips com todos os tipos do `pokedex-data.json`; tipos sem Pokémon ficam desabilitados |
-| Detalhes do Pokémon | Modal com imagem, ID, nome, tipos, barras dos 6 atributos e total |
-| Treinadores | Modal com nome, insígnias e os Pokémon de cada treinador (clicar no Pokémon abre os detalhes) |
-| Nenhum Pokémon encontrado | Mensagem na tela com botão "Limpar filtros" |
-| Interface responsiva | Layout adaptado para desktop, tablet e celular |
-| Identidade visual própria | Tema Pokédex, cores por tipo, animações e botões com efeito de pressionar |
-
-### Desafios opcionais
-
-| Desafio | Como foi atendido |
-| --- | --- |
-| Favoritos | Botão de Poké Bola nos cards e nos detalhes ("Capturado"), contador no topo e filtro "Só capturados". Fica salvo no `localStorage` |
-| Comparação | Ícone de comparação nos cards seleciona até 2 Pokémon; o botão "Comparar" abre um modal com os atributos lado a lado, destaque do maior valor, total e resumo de quem lidera |
-| Ordenação | Seletor por Número, Nome, HP, Ataque, Defesa, Atq. Esp., Def. Esp. e Velocidade, com botão de ordem crescente/decrescente. O atributo ordenado fica em destaque nos cards |
-| Pokémon aleatório | Botão "Aleatório" sorteia um Pokémon (dentro dos filtros ativos, se houver) e abre os detalhes |
-| Dark Mode | Botão no topo alterna entre o tema escuro (padrão) e um tema claro com tela de LCD verde-claro. A escolha fica salva |
-| Responsividade avançada | Breakpoints para celular, tablet, desktop e telas largas; alvos de toque de 44px em telas touch; áreas seguras (notch) em celulares |
-| API externa | Os detalhes buscam na PokéAPI altura, peso, habilidades, categoria e descrição (veja abaixo) |
-
-Outros detalhes: navegação nos detalhes com botões Anterior/Próximo e setas ← → do teclado; modais com foco preso e fechamento por `Esc`; cards navegáveis pelo teclado; respeito a `prefers-reduced-motion`.
-
-## Dados utilizados
-
-Os dados principais vêm do arquivo [`src/data/pokedex-data.json`](src/data/pokedex-data.json), importado diretamente em `App.jsx`. Ele contém Pokémon, atributos, tipos, treinadores e insígnias. Nenhum banco de dados é necessário.
-
-## Fontes externas
-
-- **PokéAPI** (https://pokeapi.co): usada apenas para **complementar** os detalhes de um Pokémon, em dois endpoints:
-  - `GET https://pokeapi.co/api/v2/pokemon/{id}`: altura, peso e habilidades;
-  - `GET https://pokeapi.co/api/v2/pokemon-species/{id}`: categoria (ex.: "Seed Pokémon") e texto da Pokédex, usados em inglês, como a API os retorna.
-
-  As respostas ficam em cache em memória durante a sessão. Se a requisição falhar, o painel mostra um aviso e o restante da aplicação continua funcionando com o `pokedex-data.json`. A lógica está em `src/hooks/usePokemonExtra.js`.
-- **Imagens dos Pokémon:** repositório de sprites da PokéAPI (artes oficiais), carregadas por URL no formato `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{id}.png`.
-- **Fontes tipográficas:** [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch) e [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P), pelo Google Fonts (`index.html`).
-
-## Organização do projeto
+## 📂 Estrutura de Pastas
 
 ```text
-src/
-├── assets/images/          # Logo da Pokédex
-├── components/
-│   ├── ComparisonModal.jsx # Comparação lado a lado de 2 Pokémon
-│   ├── Icons.jsx           # Ícones SVG (comparar, dado, sol, lua)
-│   ├── Modal.jsx           # Modal acessível reutilizado nas janelas
-│   ├── Pokeball.jsx        # Ícone de Poké Bola em SVG
-│   ├── PokemonCard.jsx     # Card da lista (ID, nome, tipos, atributos, ações)
-│   ├── PokemonDetails.jsx  # Detalhes + dados da PokéAPI
-│   ├── PokemonList.jsx     # Grade de cards e estado vazio
-│   ├── SearchBar.jsx       # Busca, ordenação e chips de filtro por tipo
-│   ├── TrainersModal.jsx
-│   └── TypeBadge.jsx       # Etiqueta colorida de tipo
-├── css/                    # Um arquivo de estilo por componente + index.css (tokens, temas e carcaça)
-├── data/
-│   └── pokedex-data.json
-├── hooks/
-│   ├── useCaptured.js      # Pokémon capturados (com localStorage)
-│   ├── usePokemonExtra.js  # Consulta à PokéAPI (com cache e tratamento de erro)
-│   └── useTheme.js         # Tema claro/escuro (com localStorage)
-├── utils/
-│   └── pokemon.js          # Imagens, IDs, tipos, atributos, ordenação e formatações
-├── App.jsx                 # Estados globais, filtragem/ordenação e composição da tela
-└── main.jsx
+pokedex-react-vite/
+├── public/
+├── src/
+│   ├── assets/
+│   │   └── images/
+│   │       ├── comparacao.png       # Screenshot do modal de comparação VS
+│   │       ├── favoritos.png        # Screenshot da tela de capturados/favoritos
+│   │       ├── home-dark.png        # Screenshot da tela inicial no tema escuro
+│   │       ├── home-ligth.png       # Screenshot da tela inicial no tema claro LCD
+│   │       ├── Logo.png             # Logo principal Legends Pokédex
+│   │       ├── stats.png            # Screenshot dos detalhes e estatísticas do Pokémon
+│   │       └── treinadores.png      # Screenshot do modal de treinadores
+│   ├── components/
+│   │   ├── ComparisonModal.jsx      # Modal de comparação lado a lado (VS)
+│   │   ├── Icons.jsx                # Ícones vetoriais em SVG
+│   │   ├── Modal.jsx                # Estrutura base de modal acessível
+│   │   ├── Pokeball.jsx             # Ícone de Poké Bola em SVG
+│   │   ├── PokemonCard.jsx          # Card individual do Pokémon
+│   │   ├── PokemonDetails.jsx       # Modal de detalhes com estatísticas e dados extras
+│   │   ├── PokemonList.jsx          # Lista e grade de cards com estado vazio
+│   │   ├── SearchBar.jsx            # Barra de pesquisa, ordenação e filtros de tipo
+│   │   ├── TrainersModal.jsx        # Modal com treinadores e suas insígnias
+│   │   └── TypeBadge.jsx            # Tag colorida do tipo do Pokémon
+│   ├── css/
+│   │   ├── ComparisonModal.css
+│   │   ├── index.css                # Tokens de design, temas, carcaça e regras globais
+│   │   ├── Modal.css
+│   │   ├── PokemonCard.css
+│   │   ├── PokemonDetails.css
+│   │   ├── PokemonList.css
+│   │   ├── SearchBar.css
+│   │   └── TrainersModal.css
+│   ├── data/
+│   │   └── pokedex-data.json        # Dados locais de Pokémon, estatísticas, tipos e treinadores
+│   ├── hooks/
+│   │   ├── useCaptured.js           # Hook para controle e persistência de capturados
+│   │   ├── usePokemonExtra.js       # Hook para requisição e cache de dados da PokéAPI
+│   │   └── useTheme.js              # Hook para alternância de tema Claro/Escuro
+│   ├── utils/
+│   │   └── pokemon.js               # Funções utilitárias de ordenação, formatação e cores
+│   ├── App.jsx                      # Componente principal e orquestração de estado
+│   └── main.jsx                     # Ponto de entrada da aplicação
+├── index.html
+├── package.json
+└── vite.config.js
 ```
 
-## Conceitos de React utilizados
+---
 
-Componentes funcionais, props, `useState`, `useEffect`, `useMemo`, `useCallback`, `useRef`, hooks personalizados (`useCaptured`, `useTheme`, `usePokemonExtra`), renderização de listas com `map()`, eventos, estados derivados (lista filtrada e ordenada), consumo de API com `fetch` e `AbortController`, e portal (`createPortal`) para os modais.
+## 🎥 Demonstração
 
-## Dependências
+### 🌐 Visão Geral da Pokédex
 
-Apenas as do template React + Vite. Nenhuma biblioteca adicional foi instalada.
+| Modo Escuro (Dark Mode) | Modo Claro (LCD Nostálgico) |
+| :---: | :---: |
+| ![Modo Escuro](src/assets/images/home-dark.png) | ![Modo Claro](src/assets/images/home-ligth.png) |
+| *Visual escuro padrão com telas azuladas* | *Visual verde-claro nostálgico das Pokédex de LCD* |
+
+### 🔍 Filtros, Detalhes e Comparação
+
+| Filtro "Só Capturados" | Detalhes & PokéAPI |
+| :---: | :---: |
+| ![Filtro Capturados](src/assets/images/favoritos.png) | ![Detalhes e PokéAPI](src/assets/images/stats.png) |
+| *Exibição apenas dos Pokémon marcados como capturados* | *Estatísticas base e dados biográficos da PokéAPI* |
+
+| Modal de Treinadores | Modal de Comparação (VS) |
+| :---: | :---: |
+| ![Modal de Treinadores](src/assets/images/treinadores.png) | ![Modal de Comparação](src/assets/images/comparacao.png) |
+| *Treinadores com insígnias e atalhos para os Pokémon do time* | *Comparativo direto de estatísticas com medidores LCD* |
+
+---
+
+## 📊 Dados Utilizados & API Externa
+
+* **Dados Locais (`pokedex-data.json`):** Fonte primária com informações dos 151 Pokémon, contendo IDs, nomes, tipos, atributos base e dados dos treinadores da região de Kanto.
+* **PokéAPI (`https://pokeapi.co`):** Utilizada via `fetch` assíncrono para enriquecer o registro da Pokédex no modal de detalhes com:
+  * Categoria do Pokémon (ex: *Mouse Pokémon*);
+  * Texto descritivo oficial da Pokédex;
+  * Altura (convertida para metros) e Peso (convertido para quilos);
+  * Lista de Habilidades e Habilidades Ocultas.
+
+---
+
+## 👥 Autores
+
+| 👤 Nome | 🖼️ Foto | :octocat: GitHub | 💼 LinkedIn 
+| :--- | :---: | :---: | :---: | :--- |
+| **Integrante 1** | <img src="https://github.com/identicons/user1.png" width="50"> | [GitHub](https://github.com/gustavoryan-del) | [LinkedIn](https://linkedin.com/in/gryangomesguedes) 
+| **Integrante 2** | <img src="https://github.com/identicons/user2.png" width="50"> | [GitHub](https://github.com/user2) | [LinkedIn](https://linkedin.com/in/user2) 
+
+---
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
