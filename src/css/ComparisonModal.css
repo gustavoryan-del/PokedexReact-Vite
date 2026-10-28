@@ -1,0 +1,203 @@
+.comparison-modal {
+  width: min(100%, 820px);
+}
+
+.comparison-screen {
+  margin: 18px;
+  padding: 18px;
+}
+
+.contenders {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.versus {
+  align-self: center;
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  color: var(--accent-strong);
+}
+
+.contender {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.contender-image {
+  width: min(140px, 100%);
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: radial-gradient(circle, color-mix(in srgb, var(--side-color) 40%, transparent) 0, transparent 68%);
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
+}
+
+.contender-id {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--screen-glow);
+}
+
+.contender-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.contender .pokemon-types {
+  justify-content: center;
+}
+
+.contender-remove {
+  padding: 4px 12px;
+  border: 2px solid var(--screen-line);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.contender-remove:hover {
+  color: var(--text-primary);
+  border-color: var(--screen-glow);
+}
+
+.compare-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr 84px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.compare-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.compare-value {
+  flex: none;
+  width: 42px;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+.compare-side--left .compare-value {
+  text-align: left;
+}
+
+.compare-side--right .compare-value {
+  text-align: right;
+}
+
+.compare-bar {
+  position: relative;
+  flex: 1;
+  height: 10px;
+  overflow: hidden;
+  background: var(--screen-inset);
+  border: 1px solid var(--screen-line);
+  border-radius: 3px;
+}
+
+.compare-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 7px, rgba(0, 0, 0, 0.5) 7px 8px);
+}
+
+.compare-bar-fill {
+  height: 100%;
+  width: var(--value);
+  background: var(--side-color);
+  animation: compare-bar-grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* A barra da esquerda cresce em direção ao centro */
+.compare-side--left .compare-bar-fill {
+  margin-left: auto;
+}
+
+.compare-label {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* Quem tem o maior valor ganha destaque na cor e na borda da barra */
+.is-higher .compare-value {
+  color: var(--accent-strong);
+}
+
+.is-higher .compare-bar {
+  border-color: var(--accent-strong);
+}
+
+.compare-row--total {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--screen-line);
+}
+
+.compare-row--total .compare-side--left {
+  justify-content: flex-start;
+}
+
+.compare-row--total .compare-side--right {
+  justify-content: flex-end;
+}
+
+.compare-summary {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.comparison-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0 18px 20px;
+}
+
+@keyframes compare-bar-grow {
+  from {
+    width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .comparison-screen {
+    margin: 12px;
+    padding: 14px 12px;
+  }
+
+  .compare-row {
+    grid-template-columns: 1fr 58px 1fr;
+    gap: 6px;
+  }
+
+  .compare-value {
+    width: 36px;
+  }
+
+  .compare-label {
+    font-size: 0.72rem;
+  }
+}

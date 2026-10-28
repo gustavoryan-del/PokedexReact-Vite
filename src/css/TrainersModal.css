@@ -1,63 +1,87 @@
 .trainers-modal {
-  max-width: 800px;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
+  width: min(100%, 880px);
+}
+
+.trainers-screen {
+  margin: 18px;
+  padding: 16px;
 }
 
 .trainers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  max-height: min(58vh, 540px);
   overflow-y: auto;
-  padding-right: 8px;
+  padding: 4px 6px 4px 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--screen-glow) var(--screen-inset);
 }
 
 .trainer-card {
-  background-color: var(--bg-card);
-  border: 1px solid #333;
-  border-radius: var(--border-radius-md);
-  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  padding: 14px;
+  background: var(--screen-card);
+  border: 2px solid var(--screen-line);
+  border-radius: var(--radius-md);
 }
 
 .trainer-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #444;
-  padding-bottom: 8px;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--screen-line);
 }
 
 .trainer-header h3 {
-  font-size: 1.2rem;
-  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .badges {
-  font-size: 0.9rem;
-  color: var(--type-electric); 
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  white-space: nowrap;
+}
+
+.badge-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--accent-strong);
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px rgba(255, 203, 5, 0.6);
 }
 
 .trainer-pokemon-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  gap: 10px;
 }
 
 .trainer-pokemon-mini {
-  width: 50px;
-  height: 50px;
-  background-color: #2a2a2f;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 56px;
+  height: 56px;
   padding: 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--screen-line);
+  background: radial-gradient(circle at 50% 35%, var(--screen-card), var(--screen-well));
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.trainer-pokemon-mini:hover {
+  transform: scale(1.1);
+  border-color: var(--screen-glow);
 }
 
 .trainer-pokemon-mini img {

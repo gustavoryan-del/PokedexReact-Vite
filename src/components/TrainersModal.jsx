@@ -1,46 +1,62 @@
-import React from 'react';
+import { Modal, ModalHeader } from './Modal.jsx';
+import { getPokemonImage } from '../utils/pokemon.js';
 import '../css/TrainersModal.css';
 
-export function TrainersModal({ trainers, pokemonList, onClose }) {
-  // Função auxiliar para encontrar a imagem do Pokémon pelo ID
-  const getPokemonImage = (id) => {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-  };
+const TITLE_ID = 'trainers-title';
+
+export function TrainersModal({ trainers, pokemonList, onSelectPokemon, onClose }) {
+  const pokemonById = new Map(pokemonList.map((pokemon) => [pokemon.id, pokemon]));
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content trainers-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={onClose}>X</button>
-        
-        <div className="modal-header">
-          <h2>Treinadores Pokémon</h2>
-        </div>
+    <Modal labelledBy={TITLE_ID} onClose={onClose} className="trainers-modal">
+      <ModalHeader
+        titleId={TITLE_ID}
+        title="Treinadores"
+        tag={`${trainers.length} registros`}
+        onClose={onClose}
+      />
 
+      <div className="screen trainers-screen">
         <div className="trainers-grid">
           {trainers.map((trainer) => (
-            <div key={trainer.id} className="trainer-card">
+            <section key={trainer.id} className="trainer-card" aria-label={trainer.name}>
               <div className="trainer-header">
                 <h3>{trainer.name}</h3>
-                <span className="badges">🏅 {trainer.badges} Insígnias</span>
+                <span className="badges">
+                  <span className="badge-icon" aria-hidden="true" />
+                  {trainer.badges} {trainer.badges === 1 ? 'insígnia' : 'insígnias'}
+                </span>
               </div>
-              
+
               <div className="trainer-pokemon-list">
-                {trainer.pokemonIds.map((pokeId, index) => {
-                  const pokemon = pokemonList.find(p => p.id === pokeId);
+                {trainer.pokemonIds.map((pokemonId, index) => {
+                  const pokemon = pokemonById.get(pokemonId);
+                  if (!pokemon) return null;
+
                   return (
-                    <div key={`${pokeId}-${index}`} className="trainer-pokemon-mini" title={pokemon?.name}>
-                      <img 
-                        src={getPokemonImage(pokeId)} 
-                        alt={`Pokémon ${pokeId}`} 
+                    <button
+                      key={`${pokemonId}-${index}`}
+                      type="button"
+                      className="trainer-pokemon-mini"
+                      onClick={() => onSelectPokemon(pokemon)}
+                      title={pokemon.name}
+                      aria-label={`Ver detalhes de ${pokemon.name}`}
+                    >
+                      <img
+                        src={getPokemonImage(pokemonId)}
+                        alt=""
+                        width="48"
+                        height="48"
+                        loading="lazy"
                       />
-                    </div>
+                    </button>
                   );
                 })}
               </div>
-            </div>
+            </section>
           ))}
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

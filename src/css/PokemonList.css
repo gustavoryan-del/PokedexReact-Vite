@@ -1,17 +1,92 @@
+.pokemon-list-scroll {
+  padding: 6px 4px 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--screen-glow) var(--screen-inset);
+}
+
+/* Em telas maiores a lista rola dentro da "tela" da Pokédex */
+@media (min-width: 720px) {
+  .pokemon-list-scroll {
+    max-height: min(64vh, 720px);
+    overflow-y: auto;
+  }
+}
+
+.pokemon-list-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.pokemon-list-scroll::-webkit-scrollbar-track {
+  background: var(--screen-inset);
+  border-radius: 5px;
+}
+
+.pokemon-list-scroll::-webkit-scrollbar-thumb {
+  background: var(--screen-glow);
+  border-radius: 5px;
+  border: 2px solid var(--screen-inset);
+}
+
 .pokemon-grid {
+  list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
-  padding: 20px 0;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+  gap: 14px;
+}
+
+.pokemon-grid > li {
+  display: flex;
+}
+
+.pokemon-grid > li > .pokemon-card {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
 }
 
 .empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 16px;
   text-align: center;
-  padding: 40px;
+}
+
+.empty-pokeball {
+  --pb-top: var(--muted-a);
+  --pb-bottom: var(--muted-b);
+  --pb-button: var(--muted-b);
+  --pb-line: var(--screen-ink);
+  margin-bottom: 6px;
+}
+
+.empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.empty-hint {
+  max-width: 38ch;
+  margin-bottom: 8px;
   color: var(--text-secondary);
-  font-size: 1.2rem;
-  width: 100%;
+}
+
+/* Tablet: cards um pouco mais compactos */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+/* Desktop largo: mais colunas */
+@media (min-width: 1280px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
 }

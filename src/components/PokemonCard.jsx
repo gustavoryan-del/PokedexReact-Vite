@@ -1,35 +1,89 @@
-import React from 'react';
+import { CompareIcon } from './Icons.jsx';
+import { Pokeball } from './Pokeball.jsx';
+import { TypeBadge } from './TypeBadge.jsx';
+import { formatId, getPokemonImage, getStatShortLabel, getTypeColor } from '../utils/pokemon.js';
 import '../css/PokemonCard.css';
 
-export function PokemonCard({ pokemon, onClick }) {
-  const formattedId = String(pokemon.id).padStart(3, '0');
+export function PokemonCard({
+  pokemon,
+  isCaptured,
+  isComparing,
+  highlightStat,
+  onSelect,
+  onToggleCapture,
+  onToggleCompare,
+}) {
+  const formattedId = formatId(pokemon.id);
+  const primaryType = pokemon.types[0]?.name ?? 'typeless';
 
   return (
-    <div className="pokemon-card" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <div className="pokemon-card-header">
-        <h3 className="pokemon-name">{pokemon.name}</h3>
-        <span className="pokemon-id">#{formattedId}</span>
-      </div>
-      
-      <div className="pokemon-image-container">
-        <img 
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`} 
-          alt={`Imagem do ${pokemon.name}`} 
-          className="pokemon-image"
-        />
-      </div>
+    <article
+      className={`pokemon-card${isCaptured ? ' is-captured' : ''}`}
+      style={{ '--card-type': getTypeColor(primaryType) }}
+    >
+      <button
+        type="button"
+        className="card-main"
+        onClick={() => onSelect(pokemon)}
+        aria-label={`Ver detalhes de ${pokemon.name}, número ${formattedId}`}
+      >
+        <span className="pokemon-id">Nº {formattedId}</span>
 
-      <div className="pokemon-types">
-        {pokemon.types.map((typeObj, index) => (
-          <span 
-            key={index} 
-            className="type-badge"
-            style={{ backgroundColor: `var(--type-${typeObj.name.toLowerCase()})` }}
-          >
-            {typeObj.name}
-          </span>
-        ))}
-      </div>
-    </div>
+        <span className="pokemon-image-container">
+          <Pokeball className="card-watermark" />
+          <img
+            src={getPokemonImage(pokemon.id)}
+            alt=""
+            className="pokemon-image"
+            width="120"
+            height="120"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+
+        <span className="pokemon-name">{pokemon.name}</span>
+
+        <span className="pokemon-types">
+          {pokemon.types.map((type) => (
+            <TypeBadge key={type.id} name={type.name} />
+          ))}
+        </span>
+
+        <span className="card-stats">
+          {Object.entries(pokemon.stats).map(([statName, statValue]) => (
+            <span
+              className={`card-stat${statName === highlightStat ? ' is-highlighted' : ''}`}
+              key={statName}
+            >
+              <span className="card-stat-label">{getStatShortLabel(statName)}</span>
+              <span className="card-stat-value">{statValue}</span>
+            </span>
+          ))}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        className="compare-button"
+        onClick={() => onToggleCompare(pokemon.id)}
+        aria-pressed={isComparing}
+        aria-label={isComparing ? `Remover ${pokemon.name} da comparação` : `Comparar ${pokemon.name}`}
+        title={isComparing ? 'Remover da comparação' : 'Comparar'}
+      >
+        <CompareIcon />
+      </button>
+
+      <button
+        type="button"
+        className="capture-button"
+        onClick={() => onToggleCapture(pokemon.id)}
+        aria-pressed={isCaptured}
+        aria-label={isCaptured ? `Liberar ${pokemon.name}` : `Capturar ${pokemon.name}`}
+        title={isCaptured ? 'Capturado' : 'Capturar'}
+      >
+        <Pokeball size={20} />
+      </button>
+    </article>
   );
 }
