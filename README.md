@@ -205,8 +205,8 @@ pokedex-react-vite/
 
 | 👤 Nome | GitHub | 💼 LinkedIn 
 |
-| **Gustavo Ryan** | [GitHub](https://github.com/gustavoryan-del) | [LinkedIn](https://linkedin.com/in/gryangomesguedes) 
-| **Lucas Gomes** | [GitHub](https://github.com/user2) | [LinkedIn](https://linkedin.com/in/user2) 
+| **Gustavo Ryan Gomes Guedes** | [GitHub](https://github.com/gustavoryan-del) | [LinkedIn](https://linkedin.com/in/gryangomesguedes) 
+| **Lucas Gomes Esteves Da Silva** | [GitHub](https://github.com/LukasGom3s) | [LinkedIn](https://linkedin.com/in/user2) 
 
 ---
 
