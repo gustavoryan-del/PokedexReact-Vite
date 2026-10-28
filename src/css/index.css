@@ -688,3 +688,52 @@ img {
     margin-top: -22px;
   }
 }
+
+/* ==========================================================================
+   Desktop: a Pokédex inteira cabe na janela; só a lista rola dentro da tela
+   ========================================================================== */
+@media (min-width: 720px) and (min-height: 640px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    min-height: 0;
+  }
+
+  .pokedex {
+    height: calc(100dvh - 32px);
+    margin: 16px auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dex-top,
+  .dex-bottom {
+    flex: none;
+  }
+
+  .dex-main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 22px 4px;
+  }
+
+  .dex-screen {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dex-screen > .pokemon-list-scroll {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+}
